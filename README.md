@@ -45,8 +45,7 @@ Please contact with [Kike Puma](https://linkedin.com/in/kikepuma) if you need mo
 
 ## Screenshots
 
-<p align="center"><img src="https://cdn.rawgit.com/CosasDePuma/NameNotFound/c5d4eb53/.assets/404page.png" width="800" height="300" alt="404Page"></p>
-<p align="center"><img src="https://cdn.rawgit.com/CosasDePuma/NameNotFound/c5d4eb53/.assets/login.png" width="800" height="300" alt="Login"></p>
+<p align="center"><img src="https://cdn.rawgit.com/CosasDePuma/NameNotFound/c5d4eb53/.assets/login.png" width="640" height="480" alt="Login"></p>
 
 ### Members
 
