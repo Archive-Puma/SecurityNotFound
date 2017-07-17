@@ -5,7 +5,7 @@
 /* ----------------- */
 
 /* >>>>>>>>>>>>>>>>> */
-    @define('VERSION', '1.1');
+    @define('VERSION', '1.1b');
     @define('NAME', 'NameNotFound');
     @define('AUTHOR', 'CosasDePuma');
 
@@ -50,10 +50,15 @@
     // Headers!
     header('HTTP/1.0 404 Not Found');
     header('X-Powered-By: Pumas writting Assembly Code');
-    if( strpos($_SERVER['HTTP_USER_AGENT'],'Google') !== false ) {
-        // Avoid Google robots
-        exit;
-    } 
+    
+    // Robots!
+    if( strpos($_SERVER['HTTP_USER_AGENT'],'MSNBot') !== false ) exit; // Avoid Bing robots
+    if( strpos($_SERVER['HTTP_USER_AGENT'],'Slurp') !== false ) exit; // Avoid Yahoo! robots
+    if( strpos($_SERVER['HTTP_USER_AGENT'],'Google') !== false ) exit; // Avoid Google robots
+    if( strpos($_SERVER['HTTP_USER_AGENT'],'Yandex') !== false ) exit; // Avoid Yandex robots
+    if( strpos($_SERVER['HTTP_USER_AGENT'],'Rambler') !== false ) exit; // Avoid Rambler robots
+    if( strpos($_SERVER['HTTP_USER_AGENT'],'ia_archiver') !== false ) exit; // Avoid Archive.org robots
+
 
 /* ----------------- */
 /* -   Functions   - */
