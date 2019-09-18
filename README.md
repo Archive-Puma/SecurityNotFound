@@ -19,9 +19,10 @@
 
 ### Installation
 
-Clone or download the Github project
+Clone or download the GitHub project
 ```sh
-git clone https://github.com/cosasdepuma/securitynotfound.git && cd securitynotfound/
+git clone https://github.com/CosasDePuma/SecurityNotFound.git
+cd SecurityNotFound/
 ```
 
 Drop it on the target server and access it through the browser
@@ -31,12 +32,12 @@ http://target.com/404.php
 
 Find the input box and write your password
 ```http
-Default passwd: cosasdepuma
+Default password: cosasdepuma
 ```
 
-Log off using ***out*** param
+Log off using ***exit*** param
 ```
-http://target.com/404.php?out
+http://target.com/404.php?exit
 ```
 
 &nbsp;
