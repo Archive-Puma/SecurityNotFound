@@ -68,11 +68,7 @@ To access the control panel, press `TAB` key or search the password field using 
 <p align="center"><img src=".assets/hidepasswd.jpg"/></p>
 <br>
 
-The current password field setting is as follows:
-
-| Type | Password |
-| --- | --- |
-| Default | cosasdepuma |
+The default password is: `cosasdepuma`.
 
 > :egg: You can leave the `$passphrase` variable in the script as an empty string to directly access the control panel. If it is your intention, you have lost my respect.
 
@@ -126,8 +122,9 @@ The current password field setting is as follows:
 | # of lines in `access.log` | Action |
 | --- | --- |
 | 1 | Access without logging in |
-| 2 | Log in |
 | 1 | Access with the session already started |
+| 2 | Log in |
+| 2 | Log out |
 | 2 | Execute a command through the console |
 | 1 | Button: PHPINFO
 | 0 | Button: EXPLOIT-DB
@@ -139,6 +136,9 @@ The current password field setting is as follows:
 ---
 
 - [ ] Fix Self-Remove (Linux)
+- [ ] Prevent favicon.ico request
+- [ ] Add "Thanx & Refs" in ReadMe
+- [ ] Buttons to external page in new tab
 
 :octopus: Support the developer!
 ----
