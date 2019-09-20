@@ -39,6 +39,7 @@ Here is an example of some of the most common routes on which servers are locate
 ```sh
 # 🏁 Windows (Xampp)
 C:\Xampp\htdocs\
+
 # 🐧 Linux
 /var/www/html/
 ```
@@ -56,7 +57,7 @@ https://www.target.com/404.php
 ```
 
 <br>
-<p align="center"><img src=".assets/notfound.JPG"/></p>
+<p align="center"><img src=".assets/notfound.jpg"/></p>
 <br>
 
 > :bulb: You can replace the server 404 error template to access from any invalid URL.
@@ -64,7 +65,7 @@ https://www.target.com/404.php
 To access the control panel, press `TAB` key or search the password field using your browser's tools.
 
 <br>
-<p align="center"><img src=".assets/hidepasswd.JPG"/></p>
+<p align="center"><img src=".assets/hidepasswd.jpg"/></p>
 <br>
 
 The current password field setting is as follows:
@@ -80,13 +81,13 @@ The current password field setting is as follows:
 :wheel_of_dharma: Control Panel
 ---
 
-## Banner
+### Banner
 
 <br>
 <p align="center"><img src=".assets/banner.jpg"/></p>
 <br>
 
-##### Functionalities
+#### Functionalities
 
 | Function | Shown in the picture |
 | --- | --- |
@@ -97,20 +98,20 @@ The current password field setting is as follows:
 
 > :bookmark: You can also log out using the `exit` parameter in a `GET` request.
 
-## Console
+### Console
 
 <br>
 <p align="center"><img src=".assets/console.jpg"/></p>
 <br>
 
 
-## Buttons
+### Buttons
 
 <br>
 <p align="center"><img src=".assets/buttons.jpg"/></p>
 <br>
 
-##### Functionalities
+#### Functionalities
 
 | Name | Function |
 | --- | --- |
@@ -122,7 +123,22 @@ The current password field setting is as follows:
 :scroll: Log Footprints
 ---
 
-> TODO
+| # of lines in `access.log` | Action |
+| --- | --- |
+| 1 | Access without logging in |
+| 2 | Log in |
+| 1 | Access with the session already started |
+| 2 | Execute a command through the console |
+| 1 | Button: PHPINFO
+| 0 | Button: EXPLOIT-DB
+| 0 | Button: GEOLOCATE
+| 2 | Button: SELF-REMOVE
+| 1 | `Problem:` favicon.ico
+
+:memo: TO-DO
+---
+
+- [ ] Fix Self-Remove (Linux)
 
 :octopus: Support the developer!
 ----
