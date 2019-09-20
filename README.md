@@ -11,9 +11,12 @@
 
 <p align="center">
     <a href="https://coolors.co/dddddd-aaaaaa-808080-333333-ff6347" target="_blank">
-        <img src="https://img.shields.io/badge/palette-tomato%20rage-ff6347.svg?style=for-the-badge" alt="Palette"></a>
+      <img src="https://img.shields.io/badge/palette-tomato%20rage-ff6347.svg?style=for-the-badge" alt="Palette">
+    </a>
     <img src="https://img.shields.io/badge/404-badge%20not%20found-333333.svg?style=for-the-badge" alt="Joke">
-    <img src="https://img.shields.io/github/license/CosasDePuma/SecurityNotFound.svg?style=for-the-badge" alt="License">
+    <a href="https://github.com/CosasDePuma/SecurityNotFound/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/CosasDePuma/SecurityNotFound.svg?style=for-the-badge" alt="License">
+    </a>
 </p>
 <br>
 
@@ -77,13 +80,14 @@ The default password is: `cosasdepuma`.
 :wheel_of_dharma: Control Panel
 ---
 
+<p align="center">
+  <img src=".assets/banner.jpg"/>
+  <img src=".assets/console.jpg"/>
+  <img src=".assets/buttons.jpg"/>
+</p>
+
+
 ### Banner
-
-<br>
-<p align="center"><img src=".assets/banner.jpg"/></p>
-<br>
-
-#### Functionalities
 
 | Function | Shown in the picture |
 | --- | --- |
@@ -94,20 +98,7 @@ The default password is: `cosasdepuma`.
 
 > :bookmark: You can also log out using the `exit` parameter in a `GET` request.
 
-### Console
-
-<br>
-<p align="center"><img src=".assets/console.jpg"/></p>
-<br>
-
-
 ### Buttons
-
-<br>
-<p align="center"><img src=".assets/buttons.jpg"/></p>
-<br>
-
-#### Functionalities
 
 | Name | Function |
 | --- | --- |
@@ -135,6 +126,9 @@ The default password is: `cosasdepuma`.
 :memo: TO-DO
 ---
 
+- [ ] Roadmap
+- [ ] Some marketing
+- [ ] Contribution Template
 - [ ] Fix Self-Remove (Linux)
 - [ ] Prevent favicon.ico request
 - [ ] Add "Thanx & Refs" in ReadMe
