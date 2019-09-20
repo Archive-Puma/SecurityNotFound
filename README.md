@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
- <img src="https://cdn.rawgit.com/CosasDePuma/SecurityNotFound/df65e7e3/.assets/icon.png" alt="SecurityNotFound" width="200" height="200">
+  <img src="https://cdn.rawgit.com/CosasDePuma/SecurityNotFound/df65e7e3/.assets/icon.png" alt="SecurityNotFound" width="200" height="200">
   <br>
   Security Not Found!
   <br>
@@ -56,7 +56,7 @@ https://www.target.com/404.php
 ```
 
 <br>
-<div style="text-align:center"><img src=".assets/notfound.JPG"/></div>
+<p align="center"><img src=".assets/notfound.JPG"/></p>
 <br>
 
 > :bulb: You can replace the server 404 error template to access from any invalid URL.
@@ -64,7 +64,7 @@ https://www.target.com/404.php
 To access the control panel, press `TAB` key or search the password field using your browser's tools.
 
 <br>
-<div style="text-align:center"><img src=".assets/hidepasswd.JPG"/></div>
+<p align="center"><img src=".assets/hidepasswd.JPG"/></p>
 <br>
 
 The current password field setting is as follows:
@@ -83,7 +83,7 @@ The current password field setting is as follows:
 ## Banner
 
 <br>
-<div style="text-align:center"><img src=".assets/banner.jpg"/></div>
+<p align="center"><img src=".assets/banner.jpg"/></p>
 <br>
 
 ##### Functionalities
@@ -100,14 +100,14 @@ The current password field setting is as follows:
 ## Console
 
 <br>
-<div style="text-align:center"><img src=".assets/console.jpg"/></div>
+<p align="center"><img src=".assets/console.jpg"/></p>
 <br>
 
 
 ## Buttons
 
 <br>
-<div style="text-align:center"><img src=".assets/buttons.jpg"/></div>
+<p align="center"><img src=".assets/buttons.jpg"/></p>
 <br>
 
 ##### Functionalities
@@ -131,11 +131,11 @@ Everything I do and publish can be used for free whenever I receive my correspon
 Anyway, if you want to help me in a more direct way, you can leave me a tip by clicking on this badge:
 
 <br>
-<div style="text-align:center">
+<p align="center">
   <a href="https://www.paypal.me/cosasdepuma/">
     <img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge" alt="PayPal Donation" />
   </a>
-</div>
+</p>
 <br>
 
 :earth_africa: Scheme of contents
@@ -166,4 +166,4 @@ SecurityNotFound
 
 
 
-- https://github.com/tennc/webshell/blob/master/php/wso/wso_404.php
+<!-- https://github.com/tennc/webshell/blob/master/php/wso/wso_404.php -->
