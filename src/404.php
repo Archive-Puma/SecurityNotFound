@@ -74,8 +74,11 @@
 
 
 	<div>
+		<!-- Issue #2: Firefox Autocomplete -->
+		<input style="display: none;" type="password" autocomplete="foo" />
+
 		<form method="POST">
-			<input type="password" name="passwd">
+			<input type="password" name="passwd" autocomplete="foo">
 		</form>
 	</div>
 <?php
