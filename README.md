@@ -105,10 +105,10 @@ The default password is: `cosasdepuma`.
 | PHPINFO | Shows `phpinfo();` page. |
 | EXPLOIT-DB | Searches for kernel-compatible exploits in `exploit-db.com`. |
 | GEOLOCATE | It shows approximately in `Google Maps` the place where the server is physically located. |
-| CRYPTOMINER | Add a JS Cryptominer (CoinImp) to the `.php` and `.html` files in the same folder with the `</body>` tag. |
+| CRYPTOMINER | Add a JS Cryptominer ([CoinImp](https://www.coinimp.com/)) to the `.php` and `.html` files in the same folder with the `</body>` tag. |
 | SELF-REMOVE | The shell deletes itself from the server. |
 
-> :hammer: `$coinimpkey` needs to be set to use CRYTOMINER function.
+> :hammer: `$coinimpkey` needs to be set to use `CRYTOMINER` function.
 
 :scroll: Log Footprints
 ---
