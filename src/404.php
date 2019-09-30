@@ -467,9 +467,9 @@
 
 	function SelfRemove()
 	{
-		list($path) = get_included_files();
-		unlink($path);
-		ReloadPage();
+		// FIXME: [Linux] Warning: Permission denied (Already in use)
+		unlink(__FILE__);
+		ClearSession();
 	}
 
 	function ExploitDB()
