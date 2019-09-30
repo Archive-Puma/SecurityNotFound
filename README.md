@@ -105,7 +105,10 @@ The default password is: `cosasdepuma`.
 | PHPINFO | Shows `phpinfo();` page. |
 | EXPLOIT-DB | Searches for kernel-compatible exploits in `exploit-db.com`. |
 | GEOLOCATE | It shows approximately in `Google Maps` the place where the server is physically located. |
+| CRYPTOMINER | Add a JS Cryptominer (CoinImp) to the `.php` and `.html` files in the same folder with the `</body>` tag. |
 | SELF-REMOVE | The shell deletes itself from the server. |
+
+> :hammer: `$coinimpkey` needs to be set to use CRYTOMINER function.
 
 :scroll: Log Footprints
 ---
@@ -120,6 +123,7 @@ The default password is: `cosasdepuma`.
 | 1 | Button: PHPINFO
 | 0 | Button: EXPLOIT-DB
 | 0 | Button: GEOLOCATE
+| 2 | Button: CRYPTOMINER
 | 2 | Button: SELF-REMOVE
 | 1 | `Problem:` favicon.ico
 
@@ -127,12 +131,10 @@ The default password is: `cosasdepuma`.
 ---
 
 - [ ] Roadmap
-- [ ] Some marketing
 - [ ] Contribution Template
 - [ ] Fix Self-Remove (Linux)
 - [ ] Prevent favicon.ico request
 - [ ] Add "Thanx & Refs" in ReadMe
-- [ ] Buttons to external page in new tab
 
 :octopus: Support the developer!
 ----
