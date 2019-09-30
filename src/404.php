@@ -360,8 +360,8 @@
 		</div>
 		<div class="submenu">
 			<a class="button" href="?info">PHPINFO</a>
-			<a class="button" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
-			<a class="button" href="<?=GeoLocate();?>">GEOLOCATE</a>
+			<a class="button" rel="noopener noreferrer" target="_blank" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
+			<a class="button" rel="noopener noreferrer" target="_blank" href="<?=GeoLocate();?>">GEOLOCATE</a>
 			<a class="button" href="?cryptominer">CRYPTOMINER</a>
 			<a class="button selfremove" href="?selfremove">SELF-REMOVE</a>
 		</div>
