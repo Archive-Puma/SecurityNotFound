@@ -407,8 +407,10 @@
 	 */
 	function GatherInformation()
 	{
+		// Issue #3: Current user vs File owner
+		$user = explode('\\',@shell_exec('whoami'));
 		$info = array(
-			'USER'	  => @get_current_user(),
+			'USER'	  => end($user),
 			'KERNEL'  => substr(@php_uname('s'), 0, 20),
 			'RELEASE' => substr(@php_uname('r'), 0, 20)
 		);
