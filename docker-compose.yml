@@ -1,0 +1,9 @@
+---
+version: "3"
+services:
+  apache:
+    image: php:apache
+    ports:
+      - 81:80
+    volumes:
+      - ./src/:/var/www/html/:ro
