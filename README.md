@@ -23,21 +23,20 @@ git clone --depth=1 https://github.com/CosasDePuma/SecurityNotFound.git
 
 ## 📦 "Installation"
 
-The `src/404.php` file should be located on the target server.
-
-That server must have the ability to execute `.php` files.
+The `src/404.php` file should be located on the target server and it must have the ability to execute `.php` files.
 
 Here is an example of some of the most common routes on which servers are located:
 
 ```sh
-# 🏁 Windows (Xampp)
-C:\Xampp\htdocs\
+# 🏁 Windows
+C:\Xampp\htdocs\       # Xampp
 
 # 🐧 Linux
-/var/www/html/
+/var/www/html/         # Apache
+/usr/share/nginx/html/ # Nginx
 ```
 
-> :warning:  Obviously, you and I know that you have **legitimate** access to that server.
+> 👮 Obviously, you and I know that you have **legitimate** access to that server.
 
 
 ## 🚪 Access Granted!
