@@ -117,7 +117,7 @@ This has two advantages: greater stealth within the log file and the ability to 
 | 0 | Plugin: Exploit-DB (...)
 
 ## 🐙 Support the developer!
-----
+
 Everything I do and publish can be used for free whenever I receive my corresponding merit.
 
 Anyway, if you want to help me in a more direct way, you can leave me a tip by clicking on this badge:
